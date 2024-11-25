@@ -1,7 +1,7 @@
 clear; clc;
 
 %define symbols 
-syms F1 F2 s x1 x2 x3 
+syms F1 F2 F3 s x1 x2 x3 
 
 % Masses
 m1 = 2;     % kg
@@ -30,7 +30,7 @@ eq3 = 0 == (m3*s^2 + k3 + c3 * s) * x3 - ( k3 + c3*s)*x2;  %EOM block 3
 
 S = solve(eq1,eq2,eq3); % Solves EOM for x1, x2, x3 in terms of F1, F2 
 
-%%% call x1, x2, x3 solutions  
+%%% call and simplify x1, x2, x3 solutions  
 expr_x1 = simplify(S.x1);
 expr_x2 = simplify(S.x2);
 expr_x3 = simplify(S.x3);
@@ -95,7 +95,28 @@ grid on
 xlabel('Frequency (rad/sec)');
 ylabel('Magnitude (dB)');
 title('Bode Diagram G32');
-hold on;
+
+
+%%%% Question A5 with 3 forces instead of 2 
+% New EOM: 
+
+% define and solve equations of motion 
+eq1_b = 0 == (m1*s^2 + (k1 + k2) + (c1 + c2)*s )*x1 - (k2 + c2*s)*x2 - F1 + F2; %EOM block 1
+eq2_b = 0 == (m2*s^2 + (k2 + k3) + (c2+c3)*s)*x2 - (k2 + c2*s)*x1 - (k3 + c3 * s) * x3 - F2 + F3;  %EOM block 2
+eq3_b = 0 == (m3*s^2 + k3 + c3 * s) * x3 - ( k3 + c3*s)*x2 - F3;  %EOM block 3
+
+S_b = solve(eq1_b,eq2_b,eq3_b); % Solves EOM for x1, x2, x3 in terms of F1, F2 
+
+%%% call and simplify x1, x2, x3 solutions for EOM with 3 forces  
+expr_x1_b = simplify(S_b.x1);
+expr_x2_b = simplify(S_b.x2);
+expr_x3_b = simplify(S_b.x3);
+
+G33_b = x_to_g_b(expr_x3_b, F3, F1, F2);
+bode(G33_b)
+grid on
+
+
 
 
 

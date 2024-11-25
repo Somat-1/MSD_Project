@@ -1,7 +1,7 @@
 clear; clc;
 
 %define symbols 
-syms F1 F2 s x1 x2 x3 
+syms F1 F2 F3 s x1 x2 x3 
 
 % Masses
 m1 = 2;     % kg
@@ -97,6 +97,16 @@ ylabel('Magnitude (dB)');
 title('Bode Diagram G32');
 hold on;
 
+
+%%%% Question A5 with 3 forces instead of 2 
+% New EOM: 
+
+% define and solve equations of motion 
+eq1_b = 0 == (m1*s^2 + (k1 + k2) + (c1 + c2)*s )*x1 - (k2 + c2*s)*x2 - F1 + F2; %EOM block 1
+eq2_b = 0 == (m2*s^2 + (k2 + k3) + (c2+c3)*s)*x2 - (k2 + c2*s)*x1 - (k3 + c3 * s) * x3 - F2 + F3;  %EOM block 2
+eq3_b = 0 == (m3*s^2 + k3 + c3 * s) * x3 - ( k3 + c3*s)*x2 - F3;  %EOM block 3
+
+S_b = solve(eq1_b,eq2_b,eq3_b); % Solves EOM for x1, x2, x3 in terms of F1, F2 
 
 
 

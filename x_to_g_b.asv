@@ -1,14 +1,14 @@
-function [G_tf] = x_to_g(expr,F_used, F_notused)
-%%% This function has a solution for the displacement x as input. 
-%%% It rewrites the displacement in function of F1 and F2 only and from
-%%% this it generates the transferfunction of F to x 
+function [G_tf] = x_to_g_b(expr,F_used, F_notused1, F_notused2)
+%%% This one does the same as the x_to_G functions but for the system
+%%% withthe third force
 syms s
 
 % First expand the expression
 expr_expanded = expand(expr);
 
 % Splits solution for x into part depended on only 1 F
-G_part = subs(expr_expanded, F_notused, 0);  % This will give you only terms of the other F
+G_part = subs(expr_expanded, [F_notused1,F], [sym("alpha"),2]);  % This will give you only terms of the other F
+
 simplify(G_part);
 
 % Take F out of expression 
