@@ -66,8 +66,8 @@ H_x2F1 = simplify(x2_sol / F1);
 H_x3F1 = simplify(x3_sol / F1);
 
 % Display the transfer function
-disp('Transfer Function x/F1:');
-disp(H_x1F1);
+disp('Transfer Function x/F1:')
+disp(H_x1F1)
 
 % Extract the coefficients of the numerator and denominator:
 [num, den] = numden(simplify(x1_sol / F1));
@@ -127,9 +127,11 @@ legend
 %% Create System Transfer Function Matrix
 
 %[x] = [H]*[F] :- Relatting H to input and output vectors
-H = [H_x1F1, H_x1F2;
-     H_x2F1, H_x2F2;
-     H_x3F1, H_x3F2];
+H = [H_x1F1, H_x1F2
+     H_x2F1, H_x2F2
+     H_x3F1, H_x3F2]
+disp('transfer function matrix:')
+disp(H)
 
 % Input-Output Names
 H.u{1} = 'F_1'; H.u{2} = 'F_2';
